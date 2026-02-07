@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 04cb2737341193f4780878344d0e3667
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 60072b568d64c40a485e0fc55012dc9f, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 253827
+  packageName: Low Poly Nature Pack by BD Studios
+  packageVersion: 1.1
+  assetPath: Assets/Low Poly Nature Pack/Shaders/Water Shader/Cutout.shadersubgraph
+  uploadId: 847136
