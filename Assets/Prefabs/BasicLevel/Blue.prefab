@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.83, y: 1.8501158, z: -7.608053}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -135,7 +135,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &2037150679492033653
 MonoBehaviour:
@@ -149,3 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f74a5ef6e4f7df47b1cd69603dc39d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sphereColor: 1
+  scoreValue: 20
+  minSpeed: 1
+  maxSpeed: 5
+  collectSound: {fileID: 8300000, guid: 7d0b80ba33598ed47a5af3bb58e2da10, type: 3}
+  scoreSound: {fileID: 8300000, guid: 3a29b176f21190841b53d9ae82d1854c, type: 3}
