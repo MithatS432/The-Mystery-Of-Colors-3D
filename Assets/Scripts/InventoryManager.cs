@@ -67,18 +67,27 @@ public class InventoryManager : MonoBehaviour
 
     void Craft(ColorRecipe recipe)
     {
+        // Bileşenleri envanterden çıkar
         RemoveColor(recipe.colorA);
-        if (recipe.colorA == recipe.colorB)
-            RemoveColor(recipe.colorA);
-        else
+        if (recipe.colorA != recipe.colorB)
             RemoveColor(recipe.colorB);
 
+        // Sonuç rengi ekle
         if (SphereColorHelper.IsInventoryColor(recipe.resultColor))
-        {
             AddColor(recipe.resultColor);
-        }
 
+        // Fusion sonucu → görev ilerlesin
+        MissionManager.Instance?.ReportCollect(recipe.resultColor, true, false);
+
+        // Fusion için gereken bileşenler → can düşmesin
+        MissionManager.Instance?.ReportCollect(recipe.colorA, false, true);
+        if (recipe.colorA != recipe.colorB)
+            MissionManager.Instance?.ReportCollect(recipe.colorB, false, true);
     }
+
+
+
+
 
 
 

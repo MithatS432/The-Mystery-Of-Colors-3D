@@ -380,12 +380,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionText: {fileID: 327445676}
   missions:
-  - targetColor: 0
+  - targetColor: 5
     amount: 1
-    missionType: 0
-  - targetColor: 0
-    amount: 2
-    missionType: 0
+    missionType: 1
+  - targetColor: 7
+    amount: 1
+    missionType: 1
   wrongCollectSound: {fileID: 8300000, guid: 29d8e089dbe332641817e59fe3a34d11, type: 3}
   lostSound: {fileID: 8300000, guid: 857352f2e39bd9e45993561149fabf92, type: 3}
   winSound: {fileID: 8300000, guid: 58cc0e70e7487a344bd8fa6bd398e71e, type: 3}
@@ -396,6 +396,13 @@ MonoBehaviour:
   - {fileID: 973082430}
   heartSprite: {fileID: 21300000, guid: 2cd1e7842f2d29e42ab58a84c4e32fc7, type: 3}
   skullSprite: {fileID: 21300000, guid: 22aef49de91524547a49002f4c3dd639, type: 3}
+  potions:
+  - {fileID: 843962315}
+  - {fileID: 1174285519}
+  - {fileID: 1347536724}
+  potionSound: {fileID: 8300000, guid: f00b41f81125cc84bb881a313f350bcd, type: 3}
+  timeCountText: {fileID: 785204699}
+  potionVFXPrefab: {fileID: 6823302871133167919, guid: 3138a83bedbd6ad4481ba0b061da2eb6, type: 3}
 --- !u!1001 &221464590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2674,7 +2681,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &785204698
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3279,7 +3286,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 843962316}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 159754504}
+        m_TargetAssemblyTypeName: MissionManager, Assembly-CSharp
+        m_MethodName: UsePotion
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 843962315}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &843962316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3702,7 +3721,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  difficultyDuration: 60
+  difficultyDuration: 120
   gameActive: 1
 --- !u!1 &965463613
 GameObject:
@@ -4530,7 +4549,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1174285520}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 159754504}
+        m_TargetAssemblyTypeName: MissionManager, Assembly-CSharp
+        m_MethodName: UsePotion
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1174285519}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1174285520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5531,7 +5562,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1347536725}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 159754504}
+        m_TargetAssemblyTypeName: MissionManager, Assembly-CSharp
+        m_MethodName: UsePotion
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1347536724}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1347536725
 MonoBehaviour:
   m_ObjectHideFlags: 0
