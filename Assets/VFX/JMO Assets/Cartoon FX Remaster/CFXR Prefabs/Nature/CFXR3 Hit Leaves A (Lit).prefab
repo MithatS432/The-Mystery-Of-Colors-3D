@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2353600328317590899}
   - component: {fileID: 2353600328317625555}
   - component: {fileID: 2353600328335836176}
+  - component: {fileID: 5402565239500377892}
   m_Layer: 0
   m_Name: CFXR3 Hit Leaves A (Lit)
   m_TagString: Untagged
@@ -47,7 +48,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 1
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -110,7 +111,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
   randomSeed: 0
@@ -4892,6 +4893,19 @@ MonoBehaviour:
     shakesDelay: 0
   animatedLights: []
   fadeOutReference: {fileID: 0}
+--- !u!114 &5402565239500377892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2353600328335836179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13074980a1af18645aa5f2dbb2273f6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabReference: {fileID: 2353600328335836179}
 --- !u!1 &5742757422391285395
 GameObject:
   m_ObjectHideFlags: 0

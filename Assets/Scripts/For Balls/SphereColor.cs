@@ -5,5 +5,11 @@ public enum SphereColor
     Yellow,
     Green,
     Orange,
-    Purple
+    Purple,
+
+    Brown,
+    Burgundy,
+    Emerald,
+    Indigo,
+    Mustard
 }

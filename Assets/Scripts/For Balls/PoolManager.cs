@@ -42,21 +42,29 @@ public class PoolManager : MonoBehaviour
             return null;
 
         Queue<GameObject> pool = poolDictionary[prefab];
+        GameObject objectToSpawn;
 
         if (pool.Count == 0)
         {
-            GameObject newObj = Instantiate(prefab);
-            return newObj;
+            objectToSpawn = Instantiate(prefab, position, rotation);
+        }
+        else
+        {
+            objectToSpawn = pool.Dequeue();
+            objectToSpawn.transform.position = position;
+            objectToSpawn.transform.rotation = rotation;
+            objectToSpawn.SetActive(true);
         }
 
-        GameObject objectToSpawn = pool.Dequeue();
-
-        objectToSpawn.transform.position = position;
-        objectToSpawn.transform.rotation = rotation;
-        objectToSpawn.SetActive(true);
+        AutoReturnToPool autoReturn = objectToSpawn.GetComponent<AutoReturnToPool>();
+        if (autoReturn != null)
+        {
+            autoReturn.SetPrefab(prefab);
+        }
 
         return objectToSpawn;
     }
+
 
     public void ReturnToPool(GameObject prefab, GameObject obj)
     {

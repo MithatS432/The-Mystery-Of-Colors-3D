@@ -55,4 +55,26 @@ public class GameManagement : MonoBehaviour
 #endif
     }
 
+
+
+    public void SetGameActive(bool isActive)
+    {
+        SphereSpawner[] spawners = GameObject.FindObjectsByType<SphereSpawner>(FindObjectsSortMode.None);
+        foreach (var spawner in spawners)
+        {
+            spawner.gameActive = isActive;
+        }
+
+        Sphere[] spheres = GameObject.FindObjectsByType<Sphere>(FindObjectsSortMode.None);
+        foreach (var sphere in spheres)
+        {
+            sphere.enabled = isActive;
+            if (!isActive)
+            {
+                Rigidbody rb = sphere.GetComponent<Rigidbody>();
+                if (rb != null) rb.linearVelocity = Vector3.zero;
+            }
+        }
+    }
+
 }

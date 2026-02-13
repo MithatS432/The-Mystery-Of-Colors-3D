@@ -155,3 +155,4 @@ MonoBehaviour:
   maxSpeed: 5
   collectSound: {fileID: 8300000, guid: 7d0b80ba33598ed47a5af3bb58e2da10, type: 3}
   scoreSound: {fileID: 8300000, guid: 3a29b176f21190841b53d9ae82d1854c, type: 3}
+  clickSound: {fileID: 8300000, guid: da024e92f9c982d4d9cf6da7d7399cda, type: 3}

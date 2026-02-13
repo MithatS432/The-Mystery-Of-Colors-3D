@@ -17,7 +17,7 @@ RenderSettings:
   m_Fog: 1
   m_FogColor: {r: 0.32805273, g: 0.3660378, b: 0.3660378, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.192
+  m_FogDensity: 0.14
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -334,6 +334,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6125875761657573612, guid: ca37b8285c7a77149aeabc9115504acb, type: 3}
   m_PrefabInstance: {fileID: 125930024}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &159754502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 159754503}
+  - component: {fileID: 159754504}
+  m_Layer: 0
+  m_Name: Mission Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &159754503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159754502}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.55, y: 3, z: -6.93}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &159754504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159754502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b51ec8574eef274eb59436975e857f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionText: {fileID: 327445676}
+  missions:
+  - targetColor: 0
+    amount: 1
+    missionType: 0
+  - targetColor: 0
+    amount: 2
+    missionType: 0
+  wrongCollectSound: {fileID: 8300000, guid: 29d8e089dbe332641817e59fe3a34d11, type: 3}
+  lostSound: {fileID: 8300000, guid: 857352f2e39bd9e45993561149fabf92, type: 3}
+  winSound: {fileID: 8300000, guid: 58cc0e70e7487a344bd8fa6bd398e71e, type: 3}
+  maxLives: 3
+  hearts:
+  - {fileID: 965463615}
+  - {fileID: 736023023}
+  - {fileID: 973082430}
+  heartSprite: {fileID: 21300000, guid: 2cd1e7842f2d29e42ab58a84c4e32fc7, type: 3}
+  skullSprite: {fileID: 21300000, guid: 22aef49de91524547a49002f4c3dd639, type: 3}
 --- !u!1001 &221464590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -634,15 +696,15 @@ RectTransform:
   m_GameObject: {fileID: 327445674}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.97172, y: 0.97172, z: 0.97172}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1505861876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 7.365002, y: 0}
+  m_SizeDelta: {x: -4.3299947, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &327445676
 MonoBehaviour:
@@ -691,8 +753,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 26.23
+  m_fontSizeBase: 26.23
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -938,9 +1000,9 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 4.04
-    m_NormalBias: 4.82
-    m_NearPlane: 2.72
+    m_Bias: 4.52
+    m_NormalBias: 4.92
+    m_NearPlane: 4.53
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -1088,6 +1150,7 @@ Transform:
   - {fileID: 1716634087}
   - {fileID: 1726032865}
   - {fileID: 1883968878}
+  - {fileID: 883778893}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &429532096
@@ -1640,10 +1703,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 5419ed2636eeea947a4e864f709ceb47, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1782,6 +1845,39 @@ MonoBehaviour:
   greenText: {fileID: 1626539271}
   orangeText: {fileID: 2092854934}
   purpleText: {fileID: 1833364487}
+  recipes:
+  - colorA: 0
+    colorB: 1
+    resultColor: 5
+    priority: 10
+  - colorA: 0
+    colorB: 2
+    resultColor: 4
+    priority: 11
+  - colorA: 2
+    colorB: 1
+    resultColor: 3
+    priority: 12
+  - colorA: 0
+    colorB: 3
+    resultColor: 6
+    priority: 50
+  - colorA: 0
+    colorB: 5
+    resultColor: 7
+    priority: 50
+  - colorA: 1
+    colorB: 3
+    resultColor: 8
+    priority: 50
+  - colorA: 1
+    colorB: 5
+    resultColor: 9
+    priority: 50
+  - colorA: 2
+    colorB: 2
+    resultColor: 10
+    priority: 50
 --- !u!114 &600516461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3439,8 +3535,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883778892}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.61, y: 5.03, z: -7.08}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.18, y: 5.0296354, z: -0.7695365}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3448,7 +3544,7 @@ Transform:
   - {fileID: 2104499720}
   - {fileID: 879794836}
   - {fileID: 736917355}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 417795411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &902958292
 PrefabInstance:
@@ -3580,7 +3676,7 @@ MonoBehaviour:
   - {fileID: 6561205869083781475, guid: a2ed3092296dde6438d3fefda9a72a54, type: 3}
   - {fileID: 7012936639708746016, guid: 8d07a0efa5098f74f92c18b54fbba422, type: 3}
   - {fileID: 2897533627449775442, guid: 87b19c790b67bca46bc10b76cced918b, type: 3}
-  spawnDelay: 1.5
+  spawnDelay: 2
   spawnSound: {fileID: 8300000, guid: 5419ed2636eeea947a4e864f709ceb47, type: 3}
   spawnSpeedCurve:
     serializedVersion: 2
@@ -3606,7 +3702,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  difficultyDuration: 120
+  difficultyDuration: 60
+  gameActive: 1
 --- !u!1 &965463613
 GameObject:
   m_ObjectHideFlags: 0
@@ -3641,7 +3738,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -343, y: -63}
+  m_AnchoredPosition: {x: -70.12, y: -63}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &965463615
@@ -3716,7 +3813,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -72, y: -63}
+  m_AnchoredPosition: {x: -341.3, y: -63}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &973082430
@@ -7303,7 +7400,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7432,7 +7529,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7989,7 +8086,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -52.2, y: 3.4}
+  m_AnchoredPosition: {x: -61.3, y: 3.4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1833770693
@@ -8160,7 +8257,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -9272,9 +9369,9 @@ SceneRoots:
   - {fileID: 758018481}
   - {fileID: 608298809}
   - {fileID: 417795411}
-  - {fileID: 883778893}
   - {fileID: 556829924}
   - {fileID: 719285576}
   - {fileID: 960793571}
   - {fileID: 1491932994}
   - {fileID: 600516456}
+  - {fileID: 159754503}

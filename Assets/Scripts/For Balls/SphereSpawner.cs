@@ -5,19 +5,18 @@ using System.Collections.Generic;
 public class SphereSpawner : MonoBehaviour
 {
     public SpawnPoint[] spawnPoints;
-
     public GameObject[] spheres;
 
     public float spawnDelay = 1f;
     private float startSpawnDelay = 2f;
     public AudioClip spawnSound;
 
-
     [Header("Difficulty")]
     public AnimationCurve spawnSpeedCurve;
     public float difficultyDuration = 60f;
 
     private float gameTime;
+    public bool gameActive = true;
 
     void Start()
     {
@@ -30,11 +29,19 @@ public class SphereSpawner : MonoBehaviour
 
         while (true)
         {
+            if (!gameActive)
+            {
+                yield return null;
+                continue;
+            }
+
             List<SpawnPoint> shuffled = new List<SpawnPoint>(spawnPoints);
             ShuffleList(shuffled);
 
             foreach (SpawnPoint sp in shuffled)
             {
+                if (!gameActive) break;
+
                 gameTime += Time.deltaTime;
 
                 float t = Mathf.Clamp01(gameTime / difficultyDuration);

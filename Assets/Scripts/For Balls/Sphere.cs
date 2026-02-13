@@ -18,6 +18,8 @@ public class Sphere : MonoBehaviour
     [Header("Audio")]
     public AudioClip collectSound;
     public AudioClip scoreSound;
+    [SerializeField] private AudioClip clickSound;
+
 
     void Awake()
     {
@@ -86,20 +88,29 @@ public class Sphere : MonoBehaviour
 
     void Collect()
     {
-        SphereVFXManager.Instance.PlayVFX(sphereColor, transform.position);
+        PlaySound(clickSound);
 
-        PlaySound(collectSound);
-        PlaySound(scoreSound);
+        foreach (var vfx in SphereVFXManager.Instance.vfxList)
+        {
+            if (vfx.color == sphereColor)
+            {
+                Instantiate(vfx.vfxPrefab, transform.position, Quaternion.identity);
+                break;
+            }
+        }
 
-        InventoryManager.Instance.AddSphere(sphereColor);
+        InventoryManager.Instance.AddSphere(sphereColor, reportToMission: true);
+
         ScoreManager.Instance.AddScore(scoreValue);
         PoolManager.Instance.ReturnToPool(originalPrefab, gameObject);
     }
 
+
+
     void PlaySound(AudioClip clip)
     {
         if (clip != null)
-            AudioSource.PlayClipAtPoint(clip, transform.position);
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
     }
 
 
