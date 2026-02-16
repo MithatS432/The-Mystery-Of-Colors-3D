@@ -382,7 +382,7 @@ MonoBehaviour:
   missions:
   - targetColor: 5
     amount: 1
-    missionType: 1
+    missionType: 0
   - targetColor: 7
     amount: 1
     missionType: 1
@@ -1872,19 +1872,19 @@ MonoBehaviour:
   - colorA: 0
     colorB: 5
     resultColor: 7
-    priority: 50
+    priority: 51
   - colorA: 1
     colorB: 3
     resultColor: 8
-    priority: 50
+    priority: 52
   - colorA: 1
     colorB: 5
     resultColor: 9
-    priority: 50
+    priority: 53
   - colorA: 2
     colorB: 2
     resultColor: 10
-    priority: 50
+    priority: 54
 --- !u!114 &600516461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3511,7 +3511,7 @@ Transform:
   m_GameObject: {fileID: 879794835}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.981, y: -1.65, z: 0.34}
+  m_LocalPosition: {x: 4.611, y: -1.65, z: 0.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
