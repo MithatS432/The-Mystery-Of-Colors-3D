@@ -33,6 +33,8 @@ public class MissionManager : MonoBehaviour
     public AudioClip wrongCollectSound;
     public AudioClip lostSound;
     public AudioClip winSound;
+    public AudioClip chaosSound;
+
 
     private bool gameOver = false;
 
@@ -50,17 +52,48 @@ public class MissionManager : MonoBehaviour
     private bool potionCooldown = false;
     private float potionCooldownTime = 5f;
     public GameObject potionVFXPrefab;
-    private List<Button> usedPotions = new List<Button>();
 
+    [Header("Potion States")]
+    private bool balancePotionActive = false;
+    private bool magnetPotionActive = false;
+
+    public bool IsMagnetActive => magnetPotionActive;
+    public int CurrentMissionIndex => currentMissionIndex;
+    private bool filterPotionActive = false;
+    public bool IsFilterActive => filterPotionActive;
+
+    [Header("Colour Chaos")]
+    private int totalPotionsUsed = 0;
+    private bool chaosActive = false;
+
+    public bool IsChaosActive => chaosActive;
+    public GameObject chaosButton;
+    public float chaosSpawnMultiplier = 0.2f;
+
+    [Header("Spawner")]
+    public SphereSpawner spawner;
 
     void Awake()
     {
+        if (spawner != null)
+        {
+            spawner.SetSpawnerActive(true);
+            spawner.SetChaosActive(false);
+        }
+
         Instance = this;
         currentLives = maxLives;
         UpdateLifeUI();
         UpdateUI();
         InitializePotions();
+
+        spawner.SetSpawnerActive(true);
+        spawner.SetChaosActive(false);
     }
+
+
+
+
     void InitializePotions()
     {
         foreach (var btn in potions)
@@ -100,6 +133,9 @@ public class MissionManager : MonoBehaviour
     {
         if (gameOver) return;
 
+        if (balancePotionActive)
+            return;
+
         currentLives--;
         PlaySound(wrongCollectSound);
         ScoreManager.Instance?.AddScore(-50);
@@ -111,66 +147,41 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    public void ReportCollect(SphereColor color, bool isFusionResult = false, bool isRequiredForFusion = false)
+    public void ReportCollect(SphereColor color, bool fromFusion)
     {
         if (gameOver) return;
 
         if (currentMissionIndex >= missions.Length)
-        {
-            HandleGameOver(true);
             return;
-        }
 
         var mission = missions[currentMissionIndex];
 
-        // CollectOnly görev
-        if (mission.missionType == MissionType.CollectOnly)
+        if (color == mission.targetColor)
         {
-            if (color != mission.targetColor)
+            if (mission.missionType == MissionType.CollectOnly)
             {
-                LoseLife();
-                return;
-            }
-
-            progress++;
-        }
-
-        // FusionFree görev
-        else if (mission.missionType == MissionType.FusionFree)
-        {
-            if (isFusionResult)
-            {
-                if (color == mission.targetColor)
+                if (!fromFusion)
                     progress++;
-            }
-            else if (isRequiredForFusion)
-            {
-                return;
             }
             else
             {
-                LoseLife();
+                progress++;
             }
         }
-
-
-        // Görev tamamlanınca
-        if (progress >= mission.amount)
+        else
         {
-            currentMissionIndex++;
-            progress = 0;
-            currentLives = maxLives;
-            UpdateLifeUI();
-
-            IncreaseDifficultyAfterMission();
-            ActivateRandomPotion();
-
-            if (currentMissionIndex >= missions.Length)
-            {
-                HandleGameOver(true);
+            if (fromFusion && mission.missionType == MissionType.CollectOnly)
                 return;
-            }
+
+            bool isRelevant = InventoryManager.Instance
+                .IsColorRelevantRecursive(mission.targetColor, color);
+
+            if (!isRelevant)
+                LoseLife();
         }
+
+        if (progress >= mission.amount)
+            CompleteMission();
 
         UpdateUI();
     }
@@ -178,21 +189,53 @@ public class MissionManager : MonoBehaviour
 
 
 
+    void CompleteMission()
+    {
+        if (chaosActive)
+        {
+            DeactivateChaosMode();
+        }
+
+        currentMissionIndex++;
+        progress = 0;
+        currentLives = maxLives;
+        UpdateLifeUI();
+
+        IncreaseDifficultyAfterMission();
+        ActivateRandomPotion();
+
+        if (currentMissionIndex >= missions.Length)
+        {
+            HandleGameOver(true);
+        }
+    }
+
+    private void DeactivateChaosMode()
+    {
+        chaosActive = false;
+        totalPotionsUsed = 0;
+
+        spawner.SetChaosActive(false);
+        spawner.ResetMultipliers();
+
+        if (chaosButton != null)
+            chaosButton.SetActive(false);
+    }
+
 
     void IncreaseDifficultyAfterMission()
     {
-        SphereSpawner[] spawners = GameObject.FindObjectsByType<SphereSpawner>(FindObjectsSortMode.None);
-        foreach (var spawner in spawners)
-        {
-            spawner.spawnDelay *= 0.55f;
-        }
+        float newMultiplier = 0.85f;
+        spawner.SetDifficultyMultiplier(newMultiplier);
     }
+
+
     void ActivateRandomPotion()
     {
         List<Button> closedPotions = new List<Button>();
         foreach (var btn in potions)
         {
-            if (!btn.interactable && !usedPotions.Contains(btn))
+            if (!btn.interactable)
                 closedPotions.Add(btn);
         }
 
@@ -213,7 +256,23 @@ public class MissionManager : MonoBehaviour
 
     public void UsePotion(Button btn)
     {
+        if (!GameManagement.Instance.IsGameActive)
+            return;
+
         if (!btn.interactable || potionCooldown) return;
+
+        if (btn == potions[0])
+        {
+            ActivateBalancePotion();
+        }
+        if (btn == potions[1])
+        {
+            ActivateMagnetPotion();
+        }
+        if (btn == potions[2])
+        {
+            ActivateFilterPotion();
+        }
 
         if (potionSound != null)
             AudioSource.PlayClipAtPoint(potionSound, Camera.main.transform.position);
@@ -226,10 +285,6 @@ public class MissionManager : MonoBehaviour
             c.a = 0.5f;
             image.color = c;
         }
-
-        if (!usedPotions.Contains(btn))
-            usedPotions.Add(btn);
-
 
         if (potionVFXPrefab != null)
         {
@@ -252,9 +307,37 @@ public class MissionManager : MonoBehaviour
         }
 
         StartCoroutine(PotionCooldownRoutine());
+
+        totalPotionsUsed++;
+
+        if (totalPotionsUsed >= 3 && !chaosActive)
+        {
+            ActivateChaosMode();
+        }
+
     }
 
+    private void ActivateChaosMode()
+    {
+        chaosActive = true;
 
+        spawner.SetChaosActive(true);
+        spawner.SetChaosMultiplier(chaosSpawnMultiplier);
+
+        if (chaosButton != null)
+            chaosButton.SetActive(true);
+
+        if (chaosSound != null)
+            AudioSource.PlayClipAtPoint(
+                chaosSound,
+                Camera.main.transform.position
+            );
+    }
+    public void OnChaosAnimationFinished()
+    {
+        if (chaosButton != null)
+            chaosButton.SetActive(false);
+    }
 
     IEnumerator PotionCooldownRoutine()
     {
@@ -316,4 +399,55 @@ public class MissionManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+
+    public void ActivateBalancePotion()
+    {
+        if (balancePotionActive) return;
+
+        StartCoroutine(BalancePotionRoutine());
+    }
+    IEnumerator BalancePotionRoutine()
+    {
+        balancePotionActive = true;
+
+        yield return new WaitForSeconds(potionCooldownTime);
+
+        balancePotionActive = false;
+    }
+
+
+    public void ActivateMagnetPotion()
+    {
+        if (magnetPotionActive) return;
+
+        StartCoroutine(MagnetPotionRoutine());
+    }
+
+    IEnumerator MagnetPotionRoutine()
+    {
+        magnetPotionActive = true;
+
+        yield return new WaitForSeconds(potionCooldownTime);
+
+        magnetPotionActive = false;
+    }
+
+
+    public void ActivateFilterPotion()
+    {
+        if (filterPotionActive) return;
+
+        StartCoroutine(FilterPotionRoutine());
+    }
+
+    IEnumerator FilterPotionRoutine()
+    {
+        filterPotionActive = true;
+
+        yield return new WaitForSeconds(potionCooldownTime);
+
+        filterPotionActive = false;
+    }
+
 }

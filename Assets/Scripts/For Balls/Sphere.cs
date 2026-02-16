@@ -42,6 +42,7 @@ public class Sphere : MonoBehaviour
     {
         HandleInput();
         CheckOutOfBounds();
+        HandleMagnet();
     }
 
 
@@ -88,6 +89,9 @@ public class Sphere : MonoBehaviour
 
     void Collect()
     {
+        if (!GameManagement.Instance.IsGameActive)
+            return;
+
         PlaySound(clickSound);
 
         foreach (var vfx in SphereVFXManager.Instance.vfxList)
@@ -121,4 +125,35 @@ public class Sphere : MonoBehaviour
             PoolManager.Instance.ReturnToPool(originalPrefab, gameObject);
         }
     }
+
+
+
+    void HandleMagnet()
+    {
+        if (!MissionManager.Instance.IsMagnetActive)
+            return;
+
+        var mission = MissionManager.Instance.missions[
+            MissionManager.Instance.CurrentMissionIndex
+        ];
+
+        bool isRelevant = InventoryManager.Instance
+            .IsColorRelevantRecursive(mission.targetColor, sphereColor);
+
+        if (!isRelevant)
+            return;
+
+        Vector3 targetPos = mainCamera.transform.position;
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            targetPos,
+            8f * Time.deltaTime
+        );
+
+        if (Vector3.Distance(transform.position, targetPos) < 0.5f)
+        {
+            Collect();
+        }
+    }
+
 }

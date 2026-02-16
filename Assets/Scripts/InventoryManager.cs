@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
+
 
 public class InventoryManager : MonoBehaviour
 {
@@ -34,15 +36,13 @@ public class InventoryManager : MonoBehaviour
         UpdateAllUI();
     }
 
-    // ========================
-    // DIŞARIDAN GELEN TOP
-    // ========================
+
     public void AddSphere(SphereColor color, bool reportToMission = true)
     {
         AddColor(color);
 
         if (reportToMission)
-            MissionManager.Instance?.ReportCollect(color);
+            MissionManager.Instance?.ReportCollect(color, false);
 
         TryResolveRecipes();
     }
@@ -67,35 +67,21 @@ public class InventoryManager : MonoBehaviour
 
     void Craft(ColorRecipe recipe)
     {
-        // Bileşenleri envanterden çıkar
         RemoveColor(recipe.colorA);
+
         if (recipe.colorA != recipe.colorB)
             RemoveColor(recipe.colorB);
 
-        // Sonuç rengi ekle
         if (SphereColorHelper.IsInventoryColor(recipe.resultColor))
             AddColor(recipe.resultColor);
 
-        // Fusion sonucu → görev ilerlesin
-        MissionManager.Instance?.ReportCollect(recipe.resultColor, true, false);
-
-        // Fusion için gereken bileşenler → can düşmesin
-        MissionManager.Instance?.ReportCollect(recipe.colorA, false, true);
-        if (recipe.colorA != recipe.colorB)
-            MissionManager.Instance?.ReportCollect(recipe.colorB, false, true);
+        MissionManager.Instance?.ReportCollect(recipe.resultColor, true);
     }
 
 
 
 
 
-
-
-
-
-    // ========================
-    // RECIPE UYGULANABİLİR Mİ
-    // ========================
     bool CanCraft(ColorRecipe recipe)
     {
         if (recipe.colorA == recipe.colorB)
@@ -183,4 +169,58 @@ public class InventoryManager : MonoBehaviour
         UpdateUI(SphereColor.Orange);
         UpdateUI(SphereColor.Purple);
     }
+
+
+    public bool IsColorRelevantForMission(SphereColor missionColor, SphereColor pickedColor)
+    {
+        foreach (var recipe in recipes)
+        {
+            if (recipe.resultColor == missionColor)
+            {
+                if (recipe.colorA == pickedColor || recipe.colorB == pickedColor)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+    public bool IsColorRelevantRecursive(SphereColor missionColor, SphereColor pickedColor)
+    {
+        if (missionColor == pickedColor)
+            return true;
+
+        HashSet<SphereColor> visited = new HashSet<SphereColor>();
+        return CheckRelevance(missionColor, pickedColor, visited);
+    }
+
+    private bool CheckRelevance(
+        SphereColor currentTarget,
+        SphereColor pickedColor,
+        HashSet<SphereColor> visited)
+    {
+        if (visited.Contains(currentTarget))
+            return false;
+
+        visited.Add(currentTarget);
+
+        foreach (var recipe in recipes)
+        {
+            if (recipe.resultColor == currentTarget)
+            {
+                if (recipe.colorA == pickedColor ||
+                    recipe.colorB == pickedColor)
+                    return true;
+
+                if (CheckRelevance(recipe.colorA, pickedColor, visited))
+                    return true;
+
+                if (CheckRelevance(recipe.colorB, pickedColor, visited))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+
 }

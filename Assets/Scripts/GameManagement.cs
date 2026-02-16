@@ -10,6 +10,8 @@ public class GameManagement : MonoBehaviour
     public GameObject inventoryPanel;
     public Button exitButton;
 
+    public bool IsGameActive { get; private set; } = true;
+
     void Awake()
     {
         Instance = this;
@@ -20,12 +22,12 @@ public class GameManagement : MonoBehaviour
         ResumeGame();
     }
 
-
     public void PauseButton()
     {
         pausePanel.SetActive(true);
         inventoryPanel.SetActive(false);
         Time.timeScale = 0f;
+        SetGameActive(false);
     }
 
     public void InventoryButton()
@@ -33,6 +35,7 @@ public class GameManagement : MonoBehaviour
         inventoryPanel.SetActive(true);
         pausePanel.SetActive(false);
         Time.timeScale = 0f;
+        SetGameActive(false);
     }
 
     public void CloseInventory()
@@ -45,36 +48,41 @@ public class GameManagement : MonoBehaviour
         pausePanel.SetActive(false);
         inventoryPanel.SetActive(false);
         Time.timeScale = 1f;
+        SetGameActive(true);
     }
+
     public void ExitGame()
     {
 #if UNITY_EDITOR
-    UnityEditor.EditorApplication.isPlaying = false;
+        UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
     }
 
-
-
     public void SetGameActive(bool isActive)
     {
-        SphereSpawner[] spawners = GameObject.FindObjectsByType<SphereSpawner>(FindObjectsSortMode.None);
-        foreach (var spawner in spawners)
-        {
-            spawner.gameActive = isActive;
-        }
+        IsGameActive = isActive;
 
-        Sphere[] spheres = GameObject.FindObjectsByType<Sphere>(FindObjectsSortMode.None);
+        SphereSpawner[] spawners =
+            GameObject.FindObjectsByType<SphereSpawner>(FindObjectsSortMode.None);
+
+        foreach (var spawner in spawners)
+            spawner.SetSpawnerActive(isActive);
+
+        Sphere[] spheres =
+            GameObject.FindObjectsByType<Sphere>(FindObjectsSortMode.None);
+
         foreach (var sphere in spheres)
         {
             sphere.enabled = isActive;
+
             if (!isActive)
             {
                 Rigidbody rb = sphere.GetComponent<Rigidbody>();
-                if (rb != null) rb.linearVelocity = Vector3.zero;
+                if (rb != null)
+                    rb.linearVelocity = Vector3.zero;
             }
         }
     }
-
 }
