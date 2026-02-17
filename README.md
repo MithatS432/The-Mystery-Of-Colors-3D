@@ -37,11 +37,11 @@ Yellow x Yellow-->Mustard
 
 Tasks only involve collecting and combining; for example, red can only be collected, but green can be collected and combined. Additionally, if a task involves collecting green, collecting yellow won't reduce your health because it's a related color.Chaos mode is activated if you use 1 out of every 3 potions.
 
-1.Potion(ELIXIR OF BALANCE)-->If we choose the wrong color or an unrelated color, we won't lose a life for 5 seconds.
+1.Potion(ELIXIR OF BALANCE)-->If we choose the wrong color or an unrelated color, we won't lose a life for 5 seconds.(5 Seconds)
 
-2.Potion(MAGNETIC ELIXIR)-->Whatever our current task is, those colors come towards us, making it much easier to complete the tasks.
+2.Potion(MAGNETIC ELIXIR)-->Whatever our current task is, those colors come towards us, making it much easier to complete the tasks.(5 Seconds)
 
-3.Potion(QUEST POTION)-->Sadece mevcut hedefle ilişkili renkler ortaya çıkacak, bu da oyuncuya daha sorunsuz bir geçiş sağlayacak.
+3.Potion(QUEST POTION)--Only the colors associated with the current objective will spawn, providing the player with a smoother transition.(5 Seconds)
 
 
 
